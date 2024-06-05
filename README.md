@@ -1,4 +1,5 @@
 ## MKSFlix
+
 MKSFlix API, desenvolvida para gerenciar e acessar catálogo de filmes. Esta API oferece uma maneira fácil e eficiente de consultar informações detalhadas sobre filmes, gêneros, diretores, atores e avaliações.
 
 
@@ -16,9 +17,9 @@ API permite:
 
 - Avaliar filmes: Leia e adicione avaliações de filmes, com notas e comentários.
 
-## Description
+## Tecnologias 
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest) framework TypeScript.
 
 ## Installation
 
@@ -46,15 +47,6 @@ $ yarn run start:prod
 $ 
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
