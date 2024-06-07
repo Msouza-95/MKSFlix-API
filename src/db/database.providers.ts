@@ -1,8 +1,7 @@
-/* eslint-disable n/no-path-concat */
-import { DataSource } from 'typeorm'
-import { config } from 'dotenv'
+import { config } from 'dotenv';
+import { DataSource } from 'typeorm';
 
-config()
+config();
 export const databaseProviders = [
   {
     provide: 'DATA_SOURCE',
@@ -10,17 +9,17 @@ export const databaseProviders = [
       const dataSource = new DataSource({
         type: 'postgres',
         host: process.env.DB_HOST,
-        port: parseInt(process.env.DB_PORT, 10),
+        port: parseInt(process.env.DB_PORT!, 10),
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
         synchronize: false,
-        migrations: [__dirname + '../migrations/*{.ts,.js}'],
+        migrations: [`${__dirname}../migrations/*{.ts,.js}`],
         logging: true,
-      })
+      });
 
-      return dataSource.initialize()
+      return dataSource.initialize();
     },
   },
-]
+];
