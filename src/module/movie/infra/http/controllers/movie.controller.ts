@@ -1,11 +1,15 @@
 import { ICreateMovieDto } from 'src/module/movie/dto/create-movie.dto';
 import { CreateMovieUseCase } from 'src/module/movie/use-cases/create-movie';
+import { ShowMovieUseCase } from 'src/module/movie/use-cases/show-movie';
 
 import { Controller, Get, Post, Body } from '@nestjs/common';
 
-@Controller('movie')
+@Controller('movies')
 export class MovieController {
-  constructor(private readonly createMovieUseCase: CreateMovieUseCase) {}
+  constructor(
+    private readonly createMovieUseCase: CreateMovieUseCase,
+    private readonly showMovieUseCase: ShowMovieUseCase,
+  ) {}
 
   @Post()
   create(@Body() createMovieDto: ICreateMovieDto) {
@@ -14,6 +18,6 @@ export class MovieController {
 
   @Get()
   findAll() {
-    return [];
+    return this.showMovieUseCase.execute();
   }
 }
