@@ -6,6 +6,7 @@ import { directorProviders } from './director.providers';
 import { DirectorController } from './infra/http/controllers';
 import { DirectorRepository } from './infra/typeorm/repositories/director-repository';
 import { CreateDirectorUseCase } from './use-cases/create-director';
+import { ShowDirectorUseCase } from './use-cases/show-director';
 
 @Module({
   imports: [DbModule],
@@ -18,6 +19,7 @@ import { CreateDirectorUseCase } from './use-cases/create-director';
     },
     ...directorProviders,
     CreateDirectorUseCase,
+    ShowDirectorUseCase,
   ],
   exports: [
     {
