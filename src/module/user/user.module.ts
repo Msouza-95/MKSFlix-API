@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { UserController } from './infra/http/controllers';
 import { UserRepositoy } from './infra/typeorm/repositories';
 import { CreateUserUseCase } from './use-cases/create-user';
+import { ShowUserUseCase } from './use-cases/show-user';
 import { userProviders } from './user.providers';
 
 @Module({
@@ -18,6 +19,7 @@ import { userProviders } from './user.providers';
     },
     ...userProviders,
     CreateUserUseCase,
+    ShowUserUseCase,
   ],
   exports: [
     {
