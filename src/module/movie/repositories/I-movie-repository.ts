@@ -1,3 +1,5 @@
+import { DeleteResult } from 'typeorm';
+
 import { ICreateMovieDto } from '../dto/create-movie.dto';
 import { Movie } from '../infra/typeorm/entities/movie.entity';
 
@@ -7,4 +9,5 @@ export default interface IMovieRepository {
   findById(movie_id: string): Promise<Movie | null>;
   findByTitle(title: string): Promise<Movie | null>;
   save(data: Movie): Promise<Movie>;
+  delete(movie_id: string): Promise<DeleteResult>;
 }

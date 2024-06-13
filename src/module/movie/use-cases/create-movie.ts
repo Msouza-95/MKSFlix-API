@@ -33,37 +33,28 @@ export class CreateMovieUseCase {
     duration,
     synopsis,
     genre_id,
-  }: IRequest): Promise<Movie> {
+  }: IRequest): Promise<Movie | void> {
     const movie = await this.movieRepositoy.findByTitle(title);
-
     if (movie) {
       throw new ConflictException('The movie already exist ');
     }
-
     const genre = await this.genreRepositoy.findById(genre_id);
-
     if (!genre) {
       throw new ConflictException("The genre d'not exist");
     }
-
     const director = await this.directorRepositoy.findById(director_id);
-
     if (!director) {
       throw new ConflictException("The director d'not exist");
     }
-
     const newMovie = await this.movieRepositoy.create({
       title,
       year,
       duration,
       synopsis,
+      genre_id,
+      director_id,
     });
-
-    newMovie.director = director;
-    newMovie.genre = genre;
-
     await this.movieRepositoy.save(newMovie);
-
     return newMovie;
   }
 }

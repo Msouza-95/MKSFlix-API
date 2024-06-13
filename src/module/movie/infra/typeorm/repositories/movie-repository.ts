@@ -1,6 +1,6 @@
 import { ICreateMovieDto } from 'src/module/movie/dto/create-movie.dto';
 import IMovieRepository from 'src/module/movie/repositories/I-movie-repository';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, DeleteResult, Repository } from 'typeorm';
 
 import { Inject } from '@nestjs/common';
 
@@ -53,5 +53,10 @@ export class MovieRepository implements IMovieRepository {
     await this.ormRepository.save(movie);
 
     return movie;
+  }
+  public async delete(movie_id: string): Promise<DeleteResult> {
+    const result = await this.ormRepository.delete({ id: movie_id });
+
+    return result;
   }
 }
