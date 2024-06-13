@@ -3,6 +3,10 @@ import { CreateActorUseCase } from 'src/module/actor/use-cases/create-actor';
 import { DeleteActorUseCase } from 'src/module/actor/use-cases/delete-actor';
 import { ShowActorUseCase } from 'src/module/actor/use-cases/show-actor';
 import { UpdateActorUseCase } from 'src/module/actor/use-cases/update-actor';
+import { CreateCastUseCase } from 'src/module/cast/use-cases/create-cast';
+import { DeleteCastUseCase } from 'src/module/cast/use-cases/delete-cast';
+import { ShowCastUseCase } from 'src/module/cast/use-cases/show-cast';
+import { UpdateCastUseCase } from 'src/module/cast/use-cases/update-cast';
 
 import {
   Controller,
@@ -14,36 +18,43 @@ import {
   Param,
 } from '@nestjs/common';
 
-interface IUpdateActorBody {
-  name: string;
+interface ICreaterCastBody {
+  role: string;
   actor_id: string;
   movie_id: string;
+}
+
+interface IUpdateCastBody {
+  role: string;
+  actor_id: string;
+  movie_id: string;
+  cast_id: string;
 }
 
 @Controller('casts')
 export class CastController {
   constructor(
-    private readonly createActorUseCase: CreateActorUseCase,
-    private readonly showActorUseCase: ShowActorUseCase,
-    private readonly deleteActorUseCase: DeleteActorUseCase,
-    private readonly updateActorUseCase: UpdateActorUseCase,
+    private readonly createCastUseCase: CreateCastUseCase,
+    private readonly showCastUseCase: ShowCastUseCase,
+    private readonly deleteCastUseCase: DeleteCastUseCase,
+    private readonly updateCastUseCase: UpdateCastUseCase,
   ) {}
 
   @Post()
-  create(@Body() createActorDto: ICreateActorDto) {
-    return this.createActorUseCase.execute(createActorDto);
+  create(@Body() createCastDto: ICreaterCastBody) {
+    return this.createCastUseCase.execute(createCastDto);
   }
 
   @Get()
   findAll() {
-    return this.showActorUseCase.execute();
+    return this.showCastUseCase.execute();
   }
   @Put()
-  update(@Body() updateActorBody: IUpdateActorBody) {
-    return this.updateActorUseCase.execute(updateActorBody);
+  update(@Body() updateCastBody: IUpdateCastBody) {
+    return this.updateCastUseCase.execute(updateCastBody);
   }
   @Delete(':cast_id')
   delete(@Param('cast_id') cast_id: string) {
-    return this.deleteActorUseCase.execute(cast_id);
+    return this.deleteCastUseCase.execute(cast_id);
   }
 }

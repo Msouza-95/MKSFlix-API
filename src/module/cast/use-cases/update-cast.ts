@@ -1,3 +1,6 @@
+import IActorRepository from 'src/module/actor/repositories/I-actor-repository';
+import IMovieRepository from 'src/module/movie/repositories/I-movie-repository';
+
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 import { Cast } from '../infra/typeorm/entities/cast.entity';
@@ -15,6 +18,10 @@ export class UpdateCastUseCase {
   constructor(
     @Inject('ICastRepository')
     private castRepositoy: ICastRepository,
+    @Inject('IActorRepository')
+    private actorRepositoy: IActorRepository,
+    @Inject('IMovieRepository')
+    private movieRepositoy: IMovieRepository,
   ) {}
   async execute({
     cast_id,
@@ -28,8 +35,21 @@ export class UpdateCastUseCase {
       throw new NotFoundException(`Cast d'not found`);
     }
 
+    const actor = await this.actorRepositoy.findById(actor_id);
+
+    if (!actor) {
+      throw new NotFoundException(`Actor d'not found`);
+    }
+
+    const movie = await this.movieRepositoy.findById(movie_id);
+
+    if (!movie) {
+      throw new NotFoundException(`Movie d'not found`);
+    }
+
     cast.role = role;
-    // cast.movie = movie_id;
+    cast.actor = actor;
+    cast.movie = movie; // cast.movie = movie_id;
     // cast.actor = actor_id;
 
     const result = await this.castRepositoy.save(cast);

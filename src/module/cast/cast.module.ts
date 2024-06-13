@@ -2,6 +2,8 @@ import { DbModule } from 'src/db/db.module';
 
 import { Module } from '@nestjs/common';
 
+import { ActorModule } from '../actor/actor.module';
+import { MovieModule } from '../movie/movie.module';
 import { castProviders } from './cast.providers';
 import { CastController } from './infra/http/controllers';
 import { CastRepository } from './infra/typeorm/repositories';
@@ -11,7 +13,7 @@ import { ShowCastUseCase } from './use-cases/show-cast';
 import { UpdateCastUseCase } from './use-cases/update-cast';
 
 @Module({
-  imports: [DbModule],
+  imports: [DbModule, ActorModule, MovieModule],
   controllers: [CastController],
 
   providers: [
