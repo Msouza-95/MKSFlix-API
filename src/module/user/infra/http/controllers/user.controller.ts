@@ -1,10 +1,10 @@
-import { ICreateUserDto } from 'src/module/user/dto/create-user.dto';
 import { CreateUserUseCase } from 'src/module/user/use-cases/create-user';
 import { ShowUserUseCase } from 'src/module/user/use-cases/show-user';
 import { ZodValidationPipe } from 'src/pipes/zod-validation.-pipe';
 import { z } from 'zod';
 
 import { Controller, Get, Post, Body, UsePipes } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 const createUserbody = z.object({
   name: z.string(),
@@ -15,6 +15,7 @@ const createUserbody = z.object({
 type CreateUserbody = z.infer<typeof createUserbody>;
 
 @Controller('users')
+@ApiTags('User')
 export class UserController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,

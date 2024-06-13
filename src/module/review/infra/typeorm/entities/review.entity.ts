@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -20,7 +21,11 @@ export class Review {
   @Column()
   rating!: number;
 
+  @Column()
+  movie_id!: string;
+
   @ManyToOne(() => Movie)
+  @JoinColumn({ name: 'movie_id' })
   movie!: Movie;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

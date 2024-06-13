@@ -1,4 +1,3 @@
-import { ICreateActorDto } from 'src/module/actor/dto/create-actor.dto';
 import { CreateActorUseCase } from 'src/module/actor/use-cases/create-actor';
 import { DeleteActorUseCase } from 'src/module/actor/use-cases/delete-actor';
 import { ShowActorUseCase } from 'src/module/actor/use-cases/show-actor';
@@ -16,6 +15,7 @@ import {
   Param,
   UsePipes,
 } from '@nestjs/common';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 const updateActorBody = z.object({
   name: z.string(),
@@ -30,6 +30,7 @@ type UpdateActorBody = z.infer<typeof updateActorBody>;
 type CreateActorBody = z.infer<typeof createActorBody>;
 
 @Controller('actor')
+@ApiTags('Actor')
 export class ActorController {
   constructor(
     private readonly createActorUseCase: CreateActorUseCase,
@@ -39,6 +40,7 @@ export class ActorController {
   ) {}
 
   @Post()
+  @ApiResponse({ status: 201, description: 'O Actor foi criado com sucesso.' })
   @UsePipes(new ZodValidationPipe(createActorBody))
   create(@Body() createActorDto: CreateActorBody) {
     return this.createActorUseCase.execute(createActorDto);

@@ -15,6 +15,7 @@ import {
   Param,
   UsePipes,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 const updateReviewBody = z.object({
   reviewer: z.string(),
@@ -33,6 +34,7 @@ type CreateRevieWBody = z.infer<typeof createRevieWBody>;
 type UpdateReviewBody = z.infer<typeof updateReviewBody>;
 
 @Controller('reviews')
+@ApiTags('Review')
 export class ReviewController {
   constructor(
     private readonly createReviewUseCase: CreateReviewUseCase,

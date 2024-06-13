@@ -37,10 +37,14 @@ export class CreateCastUseCase {
 
     const newcast = await this.castRepository.create({
       role,
+      movie_id,
+      actor_id,
     });
 
     newcast.movie = movie;
     newcast.actor = actor;
+    newcast.actor_id = actor_id;
+    newcast.movie_id = movie_id;
 
     return newcast;
   }

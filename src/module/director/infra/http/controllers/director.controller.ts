@@ -5,6 +5,7 @@ import { ZodValidationPipe } from 'src/pipes/zod-validation.-pipe';
 import { z } from 'zod';
 
 import { Controller, Get, Post, Body, UsePipes } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 const updateDirectorBody = z.object({
   name: z.string(),
@@ -19,6 +20,7 @@ type UpdateDirectorBody = z.infer<typeof updateDirectorBody>;
 type CreateDirectorBody = z.infer<typeof createDirectorBody>;
 
 @Controller('director')
+@ApiTags('Director')
 export class DirectorController {
   constructor(
     private readonly createDirectorUseCase: CreateDirectorUseCase,

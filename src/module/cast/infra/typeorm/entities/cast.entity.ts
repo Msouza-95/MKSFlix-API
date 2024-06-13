@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -18,10 +19,18 @@ export class Cast {
   @Column()
   role!: string;
 
-  @ManyToOne(() => Movie)
+  @Column()
+  movie_id!: string;
+
+  @Column()
+  actor_id!: string;
+
+  @ManyToOne(() => Movie, movie => movie.cast)
+  @JoinColumn({ name: 'movie_id' })
   movie!: Movie;
 
-  @ManyToOne(() => Actor)
+  @ManyToOne(() => Actor, actor => actor.cast)
+  @JoinColumn({ name: 'actor_id' })
   actor!: Actor;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

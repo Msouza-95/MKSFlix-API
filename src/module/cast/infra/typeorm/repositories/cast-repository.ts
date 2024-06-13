@@ -1,5 +1,7 @@
 import { ICreateCastDto } from 'src/module/cast/dto/create-cast.dto';
 import ICastRepository from 'src/module/cast/repositories/I-cast-repository';
+import { ICreateGenreDto } from 'src/module/genre/dto/create-genre.dto';
+import IGenreRepository from 'src/module/genre/repositories/I-genre-repository';
 import { DataSource, DeleteResult, Repository } from 'typeorm';
 
 import { Inject } from '@nestjs/common';
@@ -14,27 +16,28 @@ export class CastRepository implements ICastRepository {
   }
 
   public async create(data: ICreateCastDto): Promise<Cast> {
-    const cast = this.ormRepository.create(data);
+    const genre = this.ormRepository.create(data);
 
-    await this.ormRepository.save(cast);
+    await this.ormRepository.save(genre);
 
-    return cast;
+    return genre;
   }
   public async show(): Promise<Cast[]> {
-    const cast = await this.ormRepository.find();
+    const genre = await this.ormRepository.find({
+      relations: ['actor', 'movie'],
+    });
 
-    return cast;
+    return genre;
   }
   public async findById(id: string): Promise<Cast | null> {
-    const cast = await this.ormRepository.findOne({
+    const genre = this.ormRepository.findOne({
       where: {
         id,
       },
     });
 
-    return cast;
+    return genre;
   }
-
   public async save(data: Cast): Promise<Cast> {
     const cast = this.ormRepository.create(data);
     await this.ormRepository.save(cast);

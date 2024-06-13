@@ -1,7 +1,9 @@
+import { Cast } from 'src/module/cast/infra/typeorm/entities/cast.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -14,6 +16,9 @@ export class Actor {
 
   @Column()
   name!: string;
+
+  @OneToMany(() => Cast, cast => cast.actor)
+  cast!: Cast[];
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at!: Date;

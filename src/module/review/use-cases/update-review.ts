@@ -17,7 +17,7 @@ export class UpdateReviewUseCase {
   constructor(
     @Inject('IReviewRepository')
     private reviewRepositoy: IReviewRepository,
-    @Inject('ImMvieRepository')
+    @Inject('IMovieRepository')
     private movieRepositoy: IMovieRepository,
   ) {}
   async execute({

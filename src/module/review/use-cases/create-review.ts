@@ -33,6 +33,7 @@ export class CreateReviewUseCase {
     const newReview = await this.reviewRepositoy.create({
       rating,
       reviewer,
+      movie_id,
     });
 
     newReview.movie = movie;

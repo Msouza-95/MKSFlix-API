@@ -21,7 +21,7 @@ export class ReviewRepository implements IReviewRepository {
     return review;
   }
   public async show(): Promise<Review[]> {
-    const review = await this.ormRepository.find();
+    const review = await this.ormRepository.find({ relations: ['movie'] });
 
     return review;
   }

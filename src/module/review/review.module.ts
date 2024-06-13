@@ -2,6 +2,7 @@ import { DbModule } from 'src/db/db.module';
 
 import { Module } from '@nestjs/common';
 
+import { MovieModule } from '../movie/movie.module';
 import { ReviewController } from './infra/http/controllers/review.controller';
 import { ReviewRepository } from './infra/typeorm/repositories';
 import { reviewProviders } from './review.providers';
@@ -11,7 +12,7 @@ import { ShowReviewUseCase } from './use-cases/show-review';
 import { UpdateReviewUseCase } from './use-cases/update-review';
 
 @Module({
-  imports: [DbModule],
+  imports: [DbModule, MovieModule],
   controllers: [ReviewController],
 
   providers: [

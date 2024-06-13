@@ -15,6 +15,7 @@ import {
   Param,
   UsePipes,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 const createCastBody = z.object({
   role: z.string(),
@@ -33,6 +34,7 @@ type UpdateCastBody = z.infer<typeof updateCastBody>;
 type CreateCastBody = z.infer<typeof createCastBody>;
 
 @Controller('casts')
+@ApiTags('cast')
 export class CastController {
   constructor(
     private readonly createCastUseCase: CreateCastUseCase,
