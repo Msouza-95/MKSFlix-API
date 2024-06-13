@@ -1,27 +1,32 @@
-import { ICreateMovieDto } from 'src/module/movie/dto/create-movie.dto';
 import { CreateMovieUseCase } from 'src/module/movie/use-cases/create-movie';
 import { ShowMovieUseCase } from 'src/module/movie/use-cases/show-movie';
 import { UpdateMovieUseCase } from 'src/module/movie/use-cases/update-movie';
+import { ZodValidationPipe } from 'src/pipes/zod-validation.-pipe';
+import { z } from 'zod';
 
-import { Controller, Get, Post, Body, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, UsePipes } from '@nestjs/common';
 
-interface ICreateMovieBody {
-  title: string;
-  director_id: string;
-  year: number;
-  duration: number;
-  synopsis: string;
-  genre_id: string;
-}
-interface IUpdateMovieBody {
-  title: string;
-  director_id: string;
-  year: number;
-  duration: number;
-  synopsis: string;
-  genre_id: string;
-  movie_id: string;
-}
+const createMovieBody = z.object({
+  title: z.string(),
+  director_id: z.string().uuid(),
+  year: z.number(),
+  duration: z.number(),
+  synopsis: z.string(),
+  genre_id: z.string().uuid(),
+});
+
+const updateMovieBody = z.object({
+  title: z.string(),
+  director_id: z.string().uuid(),
+  year: z.number(),
+  duration: z.number(),
+  synopsis: z.string(),
+  genre_id: z.string().uuid(),
+  movie_id: z.string().uuid(),
+});
+
+type CreateMovieBody = z.infer<typeof createMovieBody>;
+type UpdateMovieBody = z.infer<typeof updateMovieBody>;
 
 @Controller('movies')
 export class MovieController {
@@ -32,7 +37,8 @@ export class MovieController {
   ) {}
 
   @Post()
-  create(@Body() createMovie: ICreateMovieBody) {
+  @UsePipes(new ZodValidationPipe(createMovieBody))
+  create(@Body() createMovie: CreateMovieBody) {
     return this.createMovieUseCase.execute(createMovie);
   }
 
@@ -42,7 +48,8 @@ export class MovieController {
   }
 
   @Put()
-  update(@Body() updateMovie: IUpdateMovieBody) {
+  @UsePipes(new ZodValidationPipe(updateMovieBody))
+  update(@Body() updateMovie: UpdateMovieBody) {
     return this.updateMovieUseCase.execute(updateMovie);
   }
 }

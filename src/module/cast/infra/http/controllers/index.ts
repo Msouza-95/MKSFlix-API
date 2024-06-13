@@ -1,1 +1,1 @@
-export * from './actor.controller';
+export * from './cast.controller';

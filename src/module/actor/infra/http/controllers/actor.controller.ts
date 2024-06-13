@@ -3,6 +3,8 @@ import { CreateActorUseCase } from 'src/module/actor/use-cases/create-actor';
 import { DeleteActorUseCase } from 'src/module/actor/use-cases/delete-actor';
 import { ShowActorUseCase } from 'src/module/actor/use-cases/show-actor';
 import { UpdateActorUseCase } from 'src/module/actor/use-cases/update-actor';
+import { ZodValidationPipe } from 'src/pipes/zod-validation.-pipe';
+import { z } from 'zod';
 
 import {
   Controller,
@@ -12,12 +14,20 @@ import {
   Put,
   Delete,
   Param,
+  UsePipes,
 } from '@nestjs/common';
 
-interface IUpdateActorBody {
-  name: string;
-  actor_id: string;
-}
+const updateActorBody = z.object({
+  name: z.string(),
+  actor_id: z.string().uuid(),
+});
+
+const createActorBody = z.object({
+  name: z.string(),
+});
+
+type UpdateActorBody = z.infer<typeof updateActorBody>;
+type CreateActorBody = z.infer<typeof createActorBody>;
 
 @Controller('actor')
 export class ActorController {
@@ -29,7 +39,8 @@ export class ActorController {
   ) {}
 
   @Post()
-  create(@Body() createActorDto: ICreateActorDto) {
+  @UsePipes(new ZodValidationPipe(createActorBody))
+  create(@Body() createActorDto: CreateActorBody) {
     return this.createActorUseCase.execute(createActorDto);
   }
 
@@ -38,7 +49,8 @@ export class ActorController {
     return this.showActorUseCase.execute();
   }
   @Put()
-  update(@Body() updateActorBody: IUpdateActorBody) {
+  @UsePipes(new ZodValidationPipe(updateActorBody))
+  update(@Body() updateActorBody: UpdateActorBody) {
     return this.updateActorUseCase.execute(updateActorBody);
   }
   @Delete(':actor_id')

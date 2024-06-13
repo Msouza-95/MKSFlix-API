@@ -1,3 +1,6 @@
+import { hash } from 'bcryptjs';
+import { z } from 'zod';
+
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 
 import { ICreateUserDto } from '../dto/create-user.dto';
@@ -17,7 +20,13 @@ export class CreateUserUseCase {
       throw new ConflictException('The user already exist ');
     }
 
-    const newUser = await this.userRepositoy.create({ name, email, password });
+    const hashPassword = await hash(password, 8);
+
+    const newUser = await this.userRepositoy.create({
+      name,
+      email,
+      password: hashPassword,
+    });
 
     return newUser;
   }

@@ -1,12 +1,9 @@
-import { ICreateActorDto } from 'src/module/actor/dto/create-actor.dto';
-import { CreateActorUseCase } from 'src/module/actor/use-cases/create-actor';
-import { DeleteActorUseCase } from 'src/module/actor/use-cases/delete-actor';
-import { ShowActorUseCase } from 'src/module/actor/use-cases/show-actor';
-import { UpdateActorUseCase } from 'src/module/actor/use-cases/update-actor';
 import { CreateCastUseCase } from 'src/module/cast/use-cases/create-cast';
 import { DeleteCastUseCase } from 'src/module/cast/use-cases/delete-cast';
 import { ShowCastUseCase } from 'src/module/cast/use-cases/show-cast';
 import { UpdateCastUseCase } from 'src/module/cast/use-cases/update-cast';
+import { ZodValidationPipe } from 'src/pipes/zod-validation.-pipe';
+import { z } from 'zod';
 
 import {
   Controller,
@@ -16,20 +13,24 @@ import {
   Put,
   Delete,
   Param,
+  UsePipes,
 } from '@nestjs/common';
 
-interface ICreaterCastBody {
-  role: string;
-  actor_id: string;
-  movie_id: string;
-}
+const createCastBody = z.object({
+  role: z.string(),
+  actor_id: z.string().uuid(),
+  movie_id: z.string().uuid(),
+});
 
-interface IUpdateCastBody {
-  role: string;
-  actor_id: string;
-  movie_id: string;
-  cast_id: string;
-}
+const updateCastBody = z.object({
+  role: z.string(),
+  actor_id: z.string().uuid(),
+  movie_id: z.string().uuid(),
+  cast_id: z.string().uuid(),
+});
+
+type UpdateCastBody = z.infer<typeof updateCastBody>;
+type CreateCastBody = z.infer<typeof createCastBody>;
 
 @Controller('casts')
 export class CastController {
@@ -41,7 +42,8 @@ export class CastController {
   ) {}
 
   @Post()
-  create(@Body() createCastDto: ICreaterCastBody) {
+  @UsePipes(new ZodValidationPipe(createCastBody))
+  create(@Body() createCastDto: CreateCastBody) {
     return this.createCastUseCase.execute(createCastDto);
   }
 
@@ -50,7 +52,8 @@ export class CastController {
     return this.showCastUseCase.execute();
   }
   @Put()
-  update(@Body() updateCastBody: IUpdateCastBody) {
+  @UsePipes(new ZodValidationPipe(updateCastBody))
+  update(@Body() updateCastBody: UpdateCastBody) {
     return this.updateCastUseCase.execute(updateCastBody);
   }
   @Delete(':cast_id')

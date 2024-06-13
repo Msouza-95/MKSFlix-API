@@ -1,13 +1,9 @@
-import { ICreateActorDto } from 'src/module/actor/dto/create-actor.dto';
-import { CreateActorUseCase } from 'src/module/actor/use-cases/create-actor';
-import { DeleteActorUseCase } from 'src/module/actor/use-cases/delete-actor';
-import { ShowActorUseCase } from 'src/module/actor/use-cases/show-actor';
-import { UpdateActorUseCase } from 'src/module/actor/use-cases/update-actor';
-import { ICreateReviewDto } from 'src/module/review/dto/create-review.dto';
 import { CreateReviewUseCase } from 'src/module/review/use-cases/create-review';
 import { DeleteReviewUseCase } from 'src/module/review/use-cases/delete-review';
 import { ShowReviewUseCase } from 'src/module/review/use-cases/show-review';
 import { UpdateReviewUseCase } from 'src/module/review/use-cases/update-review';
+import { ZodValidationPipe } from 'src/pipes/zod-validation.-pipe';
+import { z } from 'zod';
 
 import {
   Controller,
@@ -17,20 +13,24 @@ import {
   Put,
   Delete,
   Param,
+  UsePipes,
 } from '@nestjs/common';
 
-interface IUpdateReviewBody {
-  reviewer: string;
-  rating: number;
-  movie_id: string;
-  review_id: string;
-}
+const updateReviewBody = z.object({
+  reviewer: z.string(),
+  rating: z.number(),
+  movie_id: z.string().uuid(),
+  review_id: z.string().uuid(),
+});
 
-interface ICreateRevieWBody {
-  reviewer: string;
-  rating: number;
-  movie_id: string;
-}
+const createRevieWBody = z.object({
+  reviewer: z.string(),
+  rating: z.number(),
+  movie_id: z.string().uuid(),
+});
+
+type CreateRevieWBody = z.infer<typeof createRevieWBody>;
+type UpdateReviewBody = z.infer<typeof updateReviewBody>;
 
 @Controller('reviews')
 export class ReviewController {
@@ -42,7 +42,8 @@ export class ReviewController {
   ) {}
 
   @Post()
-  create(@Body() createRevieWBody: ICreateRevieWBody) {
+  @UsePipes(new ZodValidationPipe(createRevieWBody))
+  create(@Body() createRevieWBody: CreateRevieWBody) {
     return this.createReviewUseCase.execute(createRevieWBody);
   }
   @Get()
@@ -50,7 +51,8 @@ export class ReviewController {
     return this.showReviewUseCase.execute();
   }
   @Put()
-  update(@Body() updateReviewBody: IUpdateReviewBody) {
+  @UsePipes(new ZodValidationPipe(updateReviewBody))
+  update(@Body() updateReviewBody: UpdateReviewBody) {
     return this.updateReviewUseCase.execute(updateReviewBody);
   }
   @Delete(':review_id')
