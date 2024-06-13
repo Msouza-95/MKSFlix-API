@@ -12,7 +12,6 @@ export class ShowMovieUseCase {
   ) {}
   async execute(): Promise<Movie[]> {
     const movies = await this.movieRepositoy.show();
-    console.log(movies);
 
     return movies;
   }

@@ -6,4 +6,5 @@ export default interface IMovieRepository {
   show(): Promise<Movie[]>;
   findById(movie_id: string): Promise<Movie | null>;
   findByTitle(title: string): Promise<Movie | null>;
+  save(data: Movie): Promise<Movie>;
 }

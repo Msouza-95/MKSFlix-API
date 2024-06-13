@@ -1,5 +1,6 @@
 export interface ICreateMovieDto {
   title: string;
-  releaseYear: number;
-  director_id: string;
+  year: number;
+  duration: number;
+  synopsis: string;
 }

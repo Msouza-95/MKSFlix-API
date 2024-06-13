@@ -21,7 +21,9 @@ export class MovieRepository implements IMovieRepository {
     return movie;
   }
   public async show(): Promise<Movie[]> {
-    const movies = await this.ormRepository.find();
+    const movies = await this.ormRepository.find({
+      relations: ['genre', 'director'],
+    });
 
     return movies;
   }
@@ -35,12 +37,20 @@ export class MovieRepository implements IMovieRepository {
     return movie;
   }
 
-  findByTitle(title: string): Promise<Movie | null> {
+  public async findByTitle(title: string): Promise<Movie | null> {
     const movie = this.ormRepository.findOne({
       where: {
         title,
       },
     });
+
+    return movie;
+  }
+
+  public async save(data: Movie): Promise<Movie> {
+    const movie = this.ormRepository.create(data);
+
+    await this.ormRepository.save(movie);
 
     return movie;
   }

@@ -1,7 +1,12 @@
 import IDirectorRepository from 'src/module/director/repositories/I-director-repository';
 import IGenreRepository from 'src/module/genre/repositories/I-genre-repository';
 
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { ICreateMovieDto } from '../dto/create-movie.dto';
 import { Movie } from '../infra/typeorm/entities/movie.entity';
@@ -14,10 +19,11 @@ interface IRequest {
   synopsis: string;
   genre_id: string;
   director_id: string;
+  movie_id: string;
 }
 
 @Injectable()
-export class CreateMovieUseCase {
+export class UpdateMovieUseCase {
   constructor(
     @Inject('IMovieRepository')
     private movieRepositoy: IMovieRepository,
@@ -33,37 +39,43 @@ export class CreateMovieUseCase {
     duration,
     synopsis,
     genre_id,
+    movie_id,
   }: IRequest): Promise<Movie> {
-    const movie = await this.movieRepositoy.findByTitle(title);
+    const movie = await this.movieRepositoy.findById(movie_id);
 
-    if (movie) {
-      throw new ConflictException('The movie already exist ');
+    if (!movie) {
+      throw new NotFoundException("The movie d'not found");
     }
 
     const genre = await this.genreRepositoy.findById(genre_id);
 
     if (!genre) {
-      throw new ConflictException("The genre d'not exist");
+      throw new NotFoundException("The genre d'not exist");
     }
 
     const director = await this.directorRepositoy.findById(director_id);
 
     if (!director) {
-      throw new ConflictException("The director d'not exist");
+      throw new NotFoundException("The director d'not exist");
     }
 
-    const newMovie = await this.movieRepositoy.create({
-      title,
-      year,
-      duration,
-      synopsis,
-    });
+    // caso for alterar o title do movie precisa garantir que não tenha outro já com nome que deseja alterar
+    if (movie.title !== title) {
+      const findMovie = await this.movieRepositoy.findByTitle(title);
+      if (findMovie) {
+        throw new ConflictException('The title of movie already exist ');
+      }
+    }
 
-    newMovie.director = director;
-    newMovie.genre = genre;
+    movie.title = title;
+    movie.year = year;
+    movie.duration = duration;
+    movie.synopsis = synopsis;
+    movie.director = director;
+    movie.genre = genre;
 
-    await this.movieRepositoy.save(newMovie);
+    await this.movieRepositoy.save(movie);
 
-    return newMovie;
+    return movie;
   }
 }
