@@ -49,4 +49,13 @@ export class CastRepository implements ICastRepository {
 
     return result;
   }
+
+  public async findByMovieId(movie_id: string): Promise<Cast[]> {
+    const casts = await this.ormRepository.find({
+      where: { movie_id },
+      relations: ['movie', 'actor'],
+    });
+
+    return casts;
+  }
 }

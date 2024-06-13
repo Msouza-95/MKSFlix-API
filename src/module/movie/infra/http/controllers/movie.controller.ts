@@ -1,5 +1,7 @@
+import { Cast } from 'src/module/cast/infra/typeorm/entities/cast.entity';
 import { CreateMovieUseCase } from 'src/module/movie/use-cases/create-movie';
 import { DeleteMovieUseCase } from 'src/module/movie/use-cases/delete-movie';
+import { FindCastMovieUseCase } from 'src/module/movie/use-cases/find-cast-movie';
 import { ShowMovieUseCase } from 'src/module/movie/use-cases/show-movie';
 import { UpdateMovieUseCase } from 'src/module/movie/use-cases/update-movie';
 import { ZodValidationPipe } from 'src/pipes/zod-validation.-pipe';
@@ -47,6 +49,7 @@ export class MovieController {
     private readonly showMovieUseCase: ShowMovieUseCase,
     private readonly updateMovieUseCase: UpdateMovieUseCase,
     private readonly deleteMovieCase: DeleteMovieUseCase,
+    private readonly findCastMovieUseCase: FindCastMovieUseCase,
   ) {}
 
   @Post()
@@ -68,5 +71,10 @@ export class MovieController {
   @Delete(':movie_id')
   delete(@Param('movie_id') movie_id: string) {
     return this.deleteMovieCase.execute({ movie_id });
+  }
+
+  @Get('cast/:movie_id')
+  async findCast(@Param('movie_id') movie_id: string): Promise<Cast[]> {
+    return this.findCastMovieUseCase.execute({ movie_id });
   }
 }

@@ -9,4 +9,5 @@ export default interface ICastRepository {
   findById(id: string): Promise<Cast | null>;
   save(data: Cast): Promise<Cast>;
   delete(id: string): Promise<DeleteResult>;
+  findByMovieId(movie_id: string): Promise<Cast[]>;
 }

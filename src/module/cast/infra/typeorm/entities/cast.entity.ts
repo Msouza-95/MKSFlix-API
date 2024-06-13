@@ -25,7 +25,7 @@ export class Cast {
   @Column()
   actor_id!: string;
 
-  @ManyToOne(() => Movie, movie => movie.cast)
+  @ManyToOne(() => Movie, movie => movie.casts)
   @JoinColumn({ name: 'movie_id' })
   movie!: Movie;
 

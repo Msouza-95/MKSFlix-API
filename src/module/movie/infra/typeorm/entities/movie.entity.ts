@@ -43,7 +43,7 @@ export class Movie {
   director!: Director;
 
   @OneToMany(() => Cast, cast => cast.movie)
-  cast!: Cast[];
+  casts!: Cast[];
 
   constructor() {
     if (!this.id) {
