@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: mksflix
+    container_name: msflix
     image: postgres
     ports:
       - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
-      POSTGRES_DB: mksflix
+      POSTGRES_DB: msflix
       PGDATA: /data/postgres
     volumes:
       - ./data/pg:/data/postgres

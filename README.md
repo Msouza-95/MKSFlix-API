@@ -1,9 +1,9 @@
-## MKSFlix
+## MSFlix
 
-MKSFlix API, desenvolvida para gerenciar e acessar catálogo de filmes. Esta API oferece uma maneira fácil e eficiente de consultar informações detalhadas sobre filmes, gêneros, diretores, atores e avaliações.
+MSFlix API, desenvolvida para gerenciar e acessar catálogo de filmes. Esta API oferece uma maneira fácil e eficiente de consultar informações detalhadas sobre filmes, gêneros, diretores, atores e avaliações.
 
 
-## Visão Geral 
+## Visão Geral
 
 API permite:
 
@@ -17,7 +17,7 @@ API permite:
 
 - Avaliar filmes: Leia e adicione avaliações de filmes, com notas e comentários.
 
-## Tecnologias 
+## Tecnologias
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript.
 
@@ -44,7 +44,7 @@ $ yarn run start:prod
 
 ```bash
 # unit tests
-$ 
+$
 ```
 
 
