@@ -1,28 +1,39 @@
+import { CreateauthenticateUseCase } from 'src/module/user/use-cases/create-authenticate';
 import { ZodValidationPipe } from 'src/pipes/zod-validation.-pipe';
 import { z } from 'zod';
 
-import { Controller, Post, Body, UsePipes } from '@nestjs/common';
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Injectable,
+  Post,
+  UsePipes,
+} from '@nestjs/common';
 
-const createCastBody = z.object({
-  role: z.string(),
-  actor_id: z.string().uuid(),
-  movie_id: z.string().uuid(),
+const authenticateBody = z.object({
+  email: z.string().email(),
+  password: z.string(),
 });
 
-type CreateCastBody = z.infer<typeof createCastBody>;
+type AuthenticateBody = z.infer<typeof authenticateBody>;
 
-@Controller('sessions')
-@ApiTags('sessions')
+@Controller('/sessions')
 export class AuthController {
-  constructor(private readonly jwt: JwtService) {}
+  constructor(
+    private readonly createauthenticateUseCase: CreateauthenticateUseCase,
+  ) {}
 
   @Post()
-  @ApiOperation({ summary: 'Realizar login' })
-  async create() {
-    const token = this.jwt.sign({ sub: 'user-id' });
+  @UsePipes(new ZodValidationPipe(authenticateBody))
+  async create(@Body() body: AuthenticateBody) {
+    const { email, password } = body;
 
-    return 'teste';
+    const token = await this.createauthenticateUseCase.execute({
+      password,
+      email,
+    });
+
+    return { access_token: token };
   }
 }

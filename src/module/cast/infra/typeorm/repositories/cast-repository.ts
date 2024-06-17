@@ -1,7 +1,5 @@
 import { ICreateCastDto } from 'src/module/cast/dto/create-cast.dto';
 import ICastRepository from 'src/module/cast/repositories/I-cast-repository';
-import { ICreateGenreDto } from 'src/module/genre/dto/create-genre.dto';
-import IGenreRepository from 'src/module/genre/repositories/I-genre-repository';
 import { DataSource, DeleteResult, Repository } from 'typeorm';
 
 import { Inject } from '@nestjs/common';

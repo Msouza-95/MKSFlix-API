@@ -1,10 +1,18 @@
+import { DbModule } from 'src/db/db.module';
+
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
+import { UserRepositoy } from '../user/infra/typeorm/repositories';
+import { CreateauthenticateUseCase } from '../user/use-cases/create-authenticate';
+import { userProviders } from '../user/user.providers';
+import { AuthController } from './infra/http/controllers';
+import { JwtStrategy } from './jwt.strategy';
+
 @Module({
   imports: [
+    DbModule,
     PassportModule,
     JwtModule.registerAsync({
       // inject: [ConfigService],
@@ -20,6 +28,16 @@ import { PassportModule } from '@nestjs/passport';
         };
       },
     }),
+  ],
+  controllers: [AuthController],
+  providers: [
+    {
+      provide: 'IUserRepository',
+      useClass: UserRepositoy,
+    },
+    ...userProviders,
+    CreateauthenticateUseCase,
+    JwtStrategy,
   ],
 })
 export class AuthModule {}

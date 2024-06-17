@@ -14,8 +14,10 @@ import {
   Delete,
   Param,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 const updateActorBody = z.object({
   name: z.string(),
@@ -31,6 +33,7 @@ type CreateActorBody = z.infer<typeof createActorBody>;
 
 @Controller('actor')
 @ApiTags('Actor')
+@UseGuards(AuthGuard('jwt'))
 export class ActorController {
   constructor(
     private readonly createActorUseCase: CreateActorUseCase,

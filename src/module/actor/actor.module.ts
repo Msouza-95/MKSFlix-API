@@ -1,6 +1,7 @@
 import { DbModule } from 'src/db/db.module';
 
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 
 import { actorProviders } from './actor.providers';
 import { ActorController } from './infra/http/controllers';
