@@ -19,7 +19,23 @@ API permite:
 
 ## Tecnologias
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript.
+### Frameworks:
+- [Nest](https://github.com/nestjs/nest)
+
+### ORM:
+- [TypeORM](https://typeorm.io/)
+
+### Infraestrutura:
+- [Docker](https://www.docker.com/)
+
+### Ferramentas de Teste:
+- [Vitest](https://vitest.dev/)
+
+### Banco de dados:
+- [PostgreSQL](https://www.postgresql.org/)
+
+### Documentação:
+- [Swagger](https://swagger.io/)
 
 ## Installation
 
