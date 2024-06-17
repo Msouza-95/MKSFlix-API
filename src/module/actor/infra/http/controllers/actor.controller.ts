@@ -2,6 +2,8 @@ import { CreateActorUseCase } from 'src/module/actor/use-cases/create-actor';
 import { DeleteActorUseCase } from 'src/module/actor/use-cases/delete-actor';
 import { ShowActorUseCase } from 'src/module/actor/use-cases/show-actor';
 import { UpdateActorUseCase } from 'src/module/actor/use-cases/update-actor';
+import { CurrentUser } from 'src/module/auth/current-user-decorator';
+import { UserPayload } from 'src/module/auth/jwt.strategy';
 import { ZodValidationPipe } from 'src/pipes/zod-validation.-pipe';
 import { z } from 'zod';
 
@@ -50,7 +52,8 @@ export class ActorController {
   }
 
   @Get()
-  findAll() {
+  findAll(@CurrentUser() user: UserPayload) {
+    console.log(user);
     return this.showActorUseCase.execute();
   }
   @Put()
