@@ -20,24 +20,24 @@ API permite:
 ## Tecnologias
 
 #### Frameworks:
-- [Nest](https://github.com/nestjs/nest)
+- [Nest](https://github.com/nestjs/nest) : Framework moderno para construir aplicações server-side eficientes e escaláveis em TypeScript, inspirado em Angular e compatível com diversos padrões de arquitetura.
 
-### ORM:
-- [TypeORM](https://typeorm.io/)
+#### ORM:
+- [TypeORM](https://typeorm.io/) : ORM (Object-Relational Mapping) para TypeScript e JavaScript que permite mapear objetos para entidades de banco de dados relacionais, facilitando a manipulação e persistência de dados.
 
-### Infraestrutura:
-- [Docker](https://www.docker.com/)
+#### Infraestrutura:
+- [Docker](https://www.docker.com/) : Plataforma de virtualização de contêineres que simplifica o desenvolvimento, implantação e execução de aplicações em ambientes isolados, promovendo a consistência e a portabilidade.
 
-### Ferramentas de Teste:
-- [Vitest](https://vitest.dev/)
+#### Ferramentas de Teste:
+- [Vitest](https://vitest.dev/): Ferramenta moderna de teste para JavaScript e TypeScript, projetada para ser simples de usar e configurar, oferecendo suporte a diferentes tipos de testes para garantir a qualidade do código.
 
-### Banco de dados:
-- [PostgreSQL](https://www.postgresql.org/)
+#### Banco de dados:
+- [PostgreSQL](https://www.postgresql.org/) : Sistema de gerenciamento de banco de dados relacional, conhecido por sua robustez, extensibilidade e conformidade com padrões SQL.
 
-### Documentação:
-- [Swagger](https://swagger.io/)
+#### Documentação:
+- [Swagger](https://swagger.io/) : Ferramenta para documentação de APIs, permitindo a criação de documentação interativa e teste automatizado.
 
-## Installation
+### Installation
 
 ```bash
 $ yarn install
